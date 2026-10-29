@@ -1,4 +1,3 @@
-```go
 // Package core defines the database-independent contracts and domain types
 // used by the VCF-to-database ETL application.
 //
@@ -12,4 +11,3 @@
 // Implementations of external-system interfaces belong in separate
 // adapter modules.
 package core
-```
