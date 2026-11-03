@@ -4,11 +4,19 @@ package core
 type Capabilities struct {
 	SupportedDataTypes []DataType
 
+<<<<<<< HEAD
 	PrimaryKeys bool
 	UniqueKeys  bool
 	ForeignKeys bool
 
 	BatchWrites  bool
+=======
+	PrimaryKeys  bool
+	UniqueKeys   bool
+	ForeignKeys  bool
+
+	BatchWrites bool
+>>>>>>> d136e50 (add capabilities.go)
 	Transactions bool
 }
 
