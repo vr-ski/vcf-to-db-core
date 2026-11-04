@@ -11,7 +11,11 @@ func validSchema() Schema {
 			{
 				Name: "contacts",
 				Columns: []Column{
+<<<<<<< HEAD
 					{Name: "id", Type: DataTypeInteger, Generation: GenerationAuto},
+=======
+					{Name: "id", Type: DataTypeInteger},
+>>>>>>> 59fb886 (add validation_test.go)
 					{Name: "name", Type: DataTypeString},
 					{Name: "email", Type: DataTypeString, Nullable: true},
 				},
@@ -33,8 +37,13 @@ func TestValidateSchema(t *testing.T) {
 			schema: validSchema(),
 		},
 		{
+<<<<<<< HEAD
 			name:    "no tables",
 			schema:  Schema{},
+=======
+			name: "no tables",
+			schema: Schema{},
+>>>>>>> 59fb886 (add validation_test.go)
 			wantErr: ErrInvalidSchema,
 		},
 		{
@@ -93,6 +102,7 @@ func TestValidateSchema(t *testing.T) {
 			wantErr: ErrInvalidSchema,
 		},
 		{
+<<<<<<< HEAD
 			name: "unsupported generation strategy",
 			schema: Schema{
 				Tables: []Table{
@@ -111,6 +121,8 @@ func TestValidateSchema(t *testing.T) {
 			wantErr: ErrInvalidSchema,
 		},
 		{
+=======
+>>>>>>> 59fb886 (add validation_test.go)
 			name: "unknown primary key column",
 			schema: Schema{
 				Tables: []Table{
@@ -128,8 +140,13 @@ func TestValidateSchema(t *testing.T) {
 			schema: Schema{
 				Tables: []Table{
 					{
+<<<<<<< HEAD
 						Name:       "contacts",
 						Columns:    []Column{{Name: "id", Type: DataTypeInteger}},
+=======
+						Name:      "contacts",
+						Columns:   []Column{{Name: "id", Type: DataTypeInteger}},
+>>>>>>> 59fb886 (add validation_test.go)
 						UniqueKeys: [][]string{{"missing"}},
 					},
 				},
@@ -366,6 +383,7 @@ func TestValidateMapping(t *testing.T) {
 		})
 	}
 }
+<<<<<<< HEAD
 
 func TestValidateMappingParentReference(t *testing.T) {
 	schema := Schema{
@@ -627,3 +645,5 @@ func TestValidateMappingRequiredColumns(t *testing.T) {
 		})
 	}
 }
+=======
+>>>>>>> 59fb886 (add validation_test.go)
