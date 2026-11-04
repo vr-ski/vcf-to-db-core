@@ -45,11 +45,14 @@ func ValidateSchema(schema Schema) error {
 					ErrInvalidSchema, column.Type, table.Name, column.Name)
 			}
 
+<<<<<<< HEAD
 			if !isValidGenerationStrategy(column.Generation) {
 				return fmt.Errorf("%w: unsupported generation strategy %q for %s.%s",
 					ErrInvalidSchema, column.Generation, table.Name, column.Name)
 			}
 
+=======
+>>>>>>> 0bef82e (add validation.go)
 			columns[column.Name] = column
 		}
 
@@ -100,13 +103,18 @@ func ValidateSchema(schema Schema) error {
 	return nil
 }
 
+<<<<<<< HEAD
 // ValidateMapping checks whether mappings reference existing target fields
 // and describe valid parent-child relationships.
+=======
+// ValidateMapping checks whether mappings reference existing target fields.
+>>>>>>> 0bef82e (add validation.go)
 func ValidateMapping(mapping Mapping, schema Schema) error {
 	if err := ValidateSchema(schema); err != nil {
 		return err
 	}
 
+<<<<<<< HEAD
 	schemaTables := make(map[string]Table, len(schema.Tables))
 	for _, table := range schema.Tables {
 		schemaTables[table.Name] = table
@@ -115,16 +123,35 @@ func ValidateMapping(mapping Mapping, schema Schema) error {
 	mappedTables := make(map[string]TableMapping, len(mapping.Tables))
 
 	// First pass: validate target tables and reject duplicate mappings.
+=======
+	tables := make(map[string]map[string]struct{}, len(schema.Tables))
+	for _, table := range schema.Tables {
+		columns := make(map[string]struct{}, len(table.Columns))
+		for _, column := range table.Columns {
+			columns[column.Name] = struct{}{}
+		}
+		tables[table.Name] = columns
+	}
+
+	seenTables := make(map[string]struct{}, len(mapping.Tables))
+
+>>>>>>> 0bef82e (add validation.go)
 	for _, tableMapping := range mapping.Tables {
 		if strings.TrimSpace(tableMapping.TargetTable) == "" {
 			return fmt.Errorf("%w: target table cannot be empty", ErrInvalidMapping)
 		}
 
+<<<<<<< HEAD
 		if _, exists := schemaTables[tableMapping.TargetTable]; !exists {
+=======
+		columns, exists := tables[tableMapping.TargetTable]
+		if !exists {
+>>>>>>> 0bef82e (add validation.go)
 			return fmt.Errorf("%w: unknown target table %q",
 				ErrInvalidMapping, tableMapping.TargetTable)
 		}
 
+<<<<<<< HEAD
 		if _, exists := mappedTables[tableMapping.TargetTable]; exists {
 			return fmt.Errorf("%w: duplicate mapping for table %q",
 				ErrInvalidMapping, tableMapping.TargetTable)
@@ -143,6 +170,13 @@ func ValidateMapping(mapping Mapping, schema Schema) error {
 	for _, tableMapping := range mapping.Tables {
 		table := schemaTables[tableMapping.TargetTable]
 		columns := columnNames(table.Columns)
+=======
+		if _, exists := seenTables[tableMapping.TargetTable]; exists {
+			return fmt.Errorf("%w: duplicate mapping for table %q",
+				ErrInvalidMapping, tableMapping.TargetTable)
+		}
+		seenTables[tableMapping.TargetTable] = struct{}{}
+>>>>>>> 0bef82e (add validation.go)
 
 		seenFields := make(map[string]struct{}, len(tableMapping.Fields))
 
@@ -166,6 +200,7 @@ func ValidateMapping(mapping Mapping, schema Schema) error {
 				return fmt.Errorf("%w: duplicate target field %q in table %q",
 					ErrInvalidMapping, field.TargetField, tableMapping.TargetTable)
 			}
+<<<<<<< HEAD
 
 			seenFields[field.TargetField] = struct{}{}
 		}
@@ -303,6 +338,10 @@ func validateParentDependencies(mappedTables map[string]TableMapping) error {
 		if err := visit(tableName); err != nil {
 			return err
 		}
+=======
+			seenFields[field.TargetField] = struct{}{}
+		}
+>>>>>>> 0bef82e (add validation.go)
 	}
 
 	return nil
@@ -355,6 +394,7 @@ func isValidDataType(dataType DataType) bool {
 		return false
 	}
 }
+<<<<<<< HEAD
 
 func isValidGenerationStrategy(strategy GenerationStrategy) bool {
 	switch strategy {
@@ -364,3 +404,5 @@ func isValidGenerationStrategy(strategy GenerationStrategy) bool {
 		return false
 	}
 }
+=======
+>>>>>>> 0bef82e (add validation.go)
